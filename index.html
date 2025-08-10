@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>CCHT Practice Quiz</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body { font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; }
+h1 { text-align: center; }
+button { margin-top: 10px; padding: 10px; }
+.correct { color: green; }
+.incorrect { color: red; }
+</style>
+</head>
+<body>
+<h1>CCHT Practice Quiz</h1>
+<div id="quiz"></div>
+<button onclick="checkAnswers()">Submit Answers</button>
+<script>
+const questions = [
+    {
+        q: "What is the primary purpose of a carbon tank (GAC filter) in the water treatment system for hemodialysis?",
+        options: ["To remove calcium and magnesium", "To remove chlorine and chloramines", "To remove bacteria and endotoxins", "To soften the water"],
+        answer: 1
+    },
+    {
+        q: "What is the normal range for dialysate temperature?",
+        options: ["33–35°C", "35–37°C", "37–39°C", "39–41°C"],
+        answer: 1
+    },
+    {
+        q: "Which type of water is required for hemodialysis?",
+        options: ["Tap water", "Distilled water", "AAMI standard purified water", "Bottled water"],
+        answer: 2
+    }
+];
+
+function loadQuiz() {
+    const quizDiv = document.getElementById("quiz");
+    questions.forEach((q, i) => {
+        let html = `<p><strong>Q${i+1}:</strong> ${q.q}</p>`;
+        q.options.forEach((opt, j) => {
+            html += `<input type='radio' name='q${i}' value='${j}'> ${opt}<br>`;
+        });
+        quizDiv.innerHTML += html;
+    });
+}
+
+function checkAnswers() {
+    let score = 0;
+    questions.forEach((q, i) => {
+        const selected = document.querySelector(`input[name='q${i}']:checked`);
+        if (selected) {
+            if (parseInt(selected.value) === q.answer) {
+                score++;
+                selected.parentElement.innerHTML += " <span class='correct'>&#10004;</span>";
+            } else {
+                selected.parentElement.innerHTML += " <span class='incorrect'>&#10008;</span>";
+            }
+        }
+    });
+    alert(`You scored ${score} out of ${questions.length}`);
+}
+
+loadQuiz();
+</script>
+</body>
+</html>
